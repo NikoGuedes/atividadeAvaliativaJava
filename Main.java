@@ -41,24 +41,24 @@ public class Main{
                 codigoRobo++;
 
 
-                System.out.print("Informe o nome do robô:");
+                System.out.print("Informe o nome do robô: \n");
                 String nome = s.next();
-                System.out.print("Informe o ataque do robô: ");
+                System.out.print("Informe o ataque do robô: \n");
                 int ataque = s.nextInt();
 
             while (ataque < 10 || ataque > 30) {
-                System.out.println("Ataque invalido! Informe novamente: ");
+                System.out.println("Ataque invalido! Informe novamente: \n");
                 ataque = s.nextInt(); 
             }
 
-                System.out.println("Informe a defesa do robô: ");
+                System.out.print("Informe a defesa do robô: \n");
                 int defesa = s.nextInt();
             while (defesa < 0 || defesa > 20) {
-                System.out.println("Defesa invalida! Informe novamente: ");
+                System.out.println("Defesa invalida! Informe novamente: \n");
                 defesa = s.nextInt();
             }
             
-                System.out.println("Seu código foi gerado: " + codigo);
+                System.out.println("Seu código foi gerado: " + codigo + "\n");
 
                 Robo robo = new Robo(
                     codigo, 
@@ -120,8 +120,113 @@ public class Main{
                 }
 
                 }
+            break;
 
+            case 4:
             
+                if (quantidadeRobos < 2){
+                System.out.print("É necessario ter pelo menos dois robos cadastrados!");
+                break;
+                }
+
+            int encontrouRobo1 = 0;
+            int codigoRobo1 = 0;
+            
+            int encontrouRobo2 = 0;
+            int codigoRobo2 = 0;
+
+            while (encontrouRobo1 == 0 || encontrouRobo2 == 0 || codigoRobo1 == codigoRobo2){
+
+                encontrouRobo1 = 0;
+                encontrouRobo2 = 0;
+
+                System.out.print("Informe o codigo do primeiro robo: ");
+                codigoRobo1 = s.nextInt();
+
+                System.out.print("Informe o codigo do segundo robo: ");
+                codigoRobo2 = s.nextInt();
+
+                if (codigoRobo1 == codigoRobo2) {
+
+                System.out.println("Os robos precisam ser diferentes!");
+
+            } else {
+
+            for (Robo r : robos) {
+
+                if (r.codigo == codigoRobo1) {
+                    encontrouRobo1 = 1;
+                }
+                if (r.codigo == codigoRobo2) {
+                    encontrouRobo2 = 1;
+                }
+
+            }
+
+                if (encontrouRobo1 == 0 || encontrouRobo2 == 0) {
+                System.out.println("Um dos robos nao existe! Informe novamente.\n");
+                }
+            }
+            } //while
+
+            Robo atacante; // para o robo que for atacar
+            Robo defensor; // para o robo que for defnder
+
+            for (Robo robo1 : robos) {
+                if (robo1.codigo == codigoRobo1) {
+            
+            for (Robo robo2 : robos) {
+                
+                
+                if (robo2.codigo == codigoRobo2){
+                if (robo1.energiaAtual < 30 || robo2.energiaAtual < 30){
+                    System.out.print("Um dos robos estão em recuperação!");
+                } 
+                else{
+                    System.out.print("Estão disponiveis para combate!");
+                } 
+                if (robo1.pontos < robo2.pontos) {
+                    atacante = robo1;
+                    defensor = robo2;
+                }
+                else if (robo2.pontos < robo1.pontos) {
+                    atacante = robo2;
+                    defensor = robo1;
+                }
+                else {
+                    
+                    if(robo1.codigo < robo2.codigo) {
+                        atacante = robo1;
+                        defensor = robo2;   
+                    }
+                    else {
+                        atacante  = robo2;
+                        defensor = robo1;   
+                    }
+                }
+                for (int rodada = 1; rodada <= 5; rodada++) {
+                    
+                    System.out.println("Rodada " + rodada);
+                    int dano = atacante.ataque - defensor.defesa;
+                    
+                    if (dano < 5){
+                        dano = 5;
+                    }
+                    if (rodada % 2 == 0){ // *Nas rodadas pares, o dano calculado receberá um bônus de 5.
+                        dano = dano + 5;
+                    }
+                    defensor.perderEnergia(dano);
+                    System.out.println(atacante.nome + " atacou " + defensor.nome);
+                    System.out.println("Dano causado: " + dano);
+                    System.out.println("Energia restante " + defensor.energiaAtual);
+                }
+            } 
+            }   
+            }
+            }
+
+
+                
             } // SWITCH
 
     } while (option !=0);

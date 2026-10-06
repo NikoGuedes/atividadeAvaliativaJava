@@ -24,4 +24,34 @@ public Robo(int codigo, String nome, int ataque, int defesa){
 
 }
 
+public void perderEnergia (int valor) {
+
+    energiaAtual = energiaAtual - valor; // diminui a energia 
+    if (energiaAtual < 0){
+        energiaAtual = 0; // impede energia negativa
+    }
+     
 }
+
+public void recuperarEnergia (int valor) {
+
+    energiaAtual = energiaAtual + valor; // aumenta a energia
+    if (energiaAtual > 100){
+        energiaAtual = 100; // impede da energia ser mais de 100 
+    }
+}
+
+public void registrarVitoria () {
+    vitorias++; // registro de vitorias
+}
+
+public void registrarDerrota () {
+    derrotas++; // registro de derrotas 
+}
+
+public void adicionarPontos(int valor){
+    pontos = pontos + valor;
+}
+
+}
+
